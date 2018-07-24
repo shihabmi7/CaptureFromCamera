@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
+                ".jpeg",         /* suffix */
                 storageDir      /* directory */
         );
 
@@ -83,39 +83,43 @@ public class HomeActivity extends AppCompatActivity {
         buttonPanel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 addToGallery();
             }
         });
     }
+
     Button buttonPanel;
+
+    Uri a;
+    File imgFile;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
 
 
-            File imgFile = new File(mCurrentPhotoPath);
+            imgFile = new File(mCurrentPhotoPath);
             if (imgFile.exists()) {
-                image.setImageURI(Uri.fromFile(imgFile));
+                a = Uri.fromFile(imgFile);
+                image.setImageURI(a);
             }
-
 
 
             /*Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             image.setImageBitmap(imageBitmap);*/
-//            galleryAddPic();
 
 
         }
     }
 
     private void addToGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri picUri = Uri.fromFile(f);
-        galleryIntent.setData(picUri);
-        this.sendBroadcast(galleryIntent);
+
+        sendBroadcast(
+                new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                        Uri.fromFile(imgFile)));
+
     }
 
 
@@ -125,5 +129,10 @@ public class HomeActivity extends AppCompatActivity {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
+
+
+        //sendBroadcast
+        // (new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(imgFile)));
+
     }
 }

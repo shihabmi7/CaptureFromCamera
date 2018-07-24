@@ -12,9 +12,9 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -34,7 +34,8 @@
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
 
-        <activity android:name="com.shihab.cameracapture.HomeActivity">
+        <activity
+            android:name="com.shihab.cameracapture.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
